@@ -36,6 +36,50 @@ const theme = extendTheme({
         secondary: orange
       }
     }
+  },
+  typography: {
+    fontFamily: 'Inter'
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none'
+        }
+      }
+    },
+    // MuiOutlinedInput dùng để override cho TextField, đây là 1 class con của TextField
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ theme }) => {
+          return {
+            color: theme.palette.primary.main,
+            fontSize: '0.875rem',
+            '.MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.primary.light
+            },
+            '&:hover': {
+              '.MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.primary.main
+              }
+            },
+            '& fieldset': {
+              borderWidth: '1px !important'
+            }
+          }
+        }
+      }
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: ({ theme }) => {
+          return {
+            color: theme.palette.primary.main,
+            fontSize: '0.875rem'
+          }
+        }
+      }
+    }
   }
 })
 
