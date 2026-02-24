@@ -20,7 +20,7 @@ declare module '@mui/material/styles' {
 
 const theme = extendTheme({
   trelloCustom: {
-    appBarHeight: '58px',
+    appBarHeight: '61px',
     boardBarHeight: '60px'
   },
   colorSchemes: {
@@ -41,6 +41,24 @@ const theme = extendTheme({
     fontFamily: 'Inter'
   },
   components: {
+    // Override global styles của MUI, ở đây là custom scrollbar
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '*::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px'
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#3dc3c7',
+            borderRadius: '8px'
+          },
+          '*::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#00b894'
+          }
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: {
