@@ -2,6 +2,7 @@ import { Badge, Box, Button, TextField, Tooltip, Typography } from '@mui/materia
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import AppsIcon from '@mui/icons-material/Apps'
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 import SvgIcon from '@mui/material/SvgIcon'
 import ModeSelect from '../ModeSelect'
 import TrelloLogo from '../../assets/imgs/trello.svg?react'
@@ -54,7 +55,9 @@ function AppBar() {
           <Recent />
           <Starred />
           <Templates />
-          <Button variant='outlined'>Create</Button>
+          <Button variant='outlined' startIcon={<LibraryAddIcon />}>
+            Create
+          </Button>
         </Box>
       </Box>
 
