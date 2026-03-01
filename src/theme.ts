@@ -7,6 +7,7 @@ declare module '@mui/material/styles' {
     trelloCustom: {
       appBarHeight: string
       boardBarHeight: string
+      boardContentHeight: string
     }
   }
   // Nếu muốn dùng theme.options
@@ -14,14 +15,20 @@ declare module '@mui/material/styles' {
     trelloCustom?: {
       appBarHeight?: string
       boardBarHeight?: string
+      boardContentHeight?: string
     }
   }
 }
 
+const APP_BAR_HEIGHT = '61px'
+const BOARD_BAR_HEIGHT = '60px'
+const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT})`
+
 const theme = extendTheme({
   trelloCustom: {
-    appBarHeight: '61px',
-    boardBarHeight: '60px'
+    appBarHeight: APP_BAR_HEIGHT,
+    boardBarHeight: BOARD_BAR_HEIGHT,
+    boardContentHeight: BOARD_CONTENT_HEIGHT
   },
   // colorSchemes: {
   //   light: {
@@ -100,6 +107,15 @@ const theme = extendTheme({
         root: ({ theme }) => {
           return {
             // color: theme.palette.primary.main,
+            fontSize: '0.875rem'
+          }
+        }
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          '&.MuiTypography-body1': {
             fontSize: '0.875rem'
           }
         }
