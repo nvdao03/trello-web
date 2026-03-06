@@ -12,8 +12,42 @@ import DragHandleIcon from '@mui/icons-material/DragHandle'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useState } from 'react'
 import ListCards from './ListCards'
+import { mapOrder } from '../../../../utils/sorts'
 
-function Column() {
+interface PropTypes {
+  column: {
+    _id: string
+    boardId: string
+    title: string
+    cardOrderIds: string[]
+    cards: (
+      | {
+          _id: string
+          boardId: string
+          columnId: string
+          title: string
+          description: string
+          cover: string
+          memberIds: string[]
+          comments: string[]
+          attachments: string[]
+        }
+      | {
+          _id: string
+          boardId: string
+          columnId: string
+          title: string
+          description: null
+          cover: null
+          memberIds: never[]
+          comments: never[]
+          attachments: never[]
+        }
+    )[]
+  }
+}
+
+function Column({ column }: PropTypes) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -22,6 +56,8 @@ function Column() {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const orderedCards = mapOrder(column.cards, column.cardOrderIds, '_id')
 
   return (
     <Box
@@ -53,7 +89,7 @@ function Column() {
           }}
           variant='h6'
         >
-          Column Title
+          {column.title}
         </Typography>
         <Box>
           <Tooltip title='More options' placement='top'>
@@ -119,7 +155,7 @@ function Column() {
       </Box>
 
       {/* Box List Cards */}
-      <ListCards />
+      <ListCards cards={orderedCards} />
 
       {/* Box Footer */}
       <Box

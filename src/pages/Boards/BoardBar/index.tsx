@@ -8,6 +8,49 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 import Avatar from '@mui/material/Avatar'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { capitalizeFirstLetter } from '../../../utils/formatters'
+
+interface PropTypes {
+  board: {
+    _id: string
+    title: string
+    description: string
+    type: string
+    ownerIds: never[]
+    memberIds: never[]
+    columnOrderIds: string[]
+    columns: {
+      _id: string
+      boardId: string
+      title: string
+      cardOrderIds: string[]
+      cards: (
+        | {
+            _id: string
+            boardId: string
+            columnId: string
+            title: string
+            description: string
+            cover: string
+            memberIds: string[]
+            comments: string[]
+            attachments: string[]
+          }
+        | {
+            _id: string
+            boardId: string
+            columnId: string
+            title: string
+            description: null
+            cover: null
+            memberIds: never[]
+            comments: never[]
+            attachments: never[]
+          }
+      )[]
+    }[]
+  }
+}
 
 const MENU_STYLES = {
   color: 'white',
@@ -23,7 +66,7 @@ const MENU_STYLES = {
   }
 }
 
-function BoardBar() {
+function BoardBar({ board }: PropTypes) {
   return (
     <Box
       sx={{
@@ -43,8 +86,8 @@ function BoardBar() {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Chip icon={<DashboardIcon />} label='MERN Stack Board' clickable sx={MENU_STYLES} />
-        <Chip icon={<VpnLockIcon />} label='Public/Private Workspace' clickable sx={MENU_STYLES} />
+        <Chip icon={<DashboardIcon />} label={board.title} clickable sx={MENU_STYLES} />
+        <Chip icon={<VpnLockIcon />} label={capitalizeFirstLetter(board.type)} clickable sx={MENU_STYLES} />
         <Chip icon={<AddToDriveIcon />} label='Add To Google Drive' clickable sx={MENU_STYLES} />
         <Chip icon={<BoltIcon />} label='Automation' clickable sx={MENU_STYLES} />
         <Chip icon={<FilterListIcon />} label='Filter' clickable sx={MENU_STYLES} />

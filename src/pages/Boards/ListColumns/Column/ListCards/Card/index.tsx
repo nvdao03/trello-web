@@ -7,7 +7,37 @@ import GroupIcon from '@mui/icons-material/Group'
 import CommentIcon from '@mui/icons-material/Comment'
 import AttachmentIcon from '@mui/icons-material/Attachment'
 
-function Card() {
+interface PropTypes {
+  card:
+    | {
+        _id: string
+        boardId: string
+        columnId: string
+        title: string
+        description: string
+        cover: string
+        memberIds: string[]
+        comments: string[]
+        attachments: string[]
+      }
+    | {
+        _id: string
+        boardId: string
+        columnId: string
+        title: string
+        description: null
+        cover: null
+        memberIds: never[]
+        comments: never[]
+        attachments: never[]
+      }
+}
+
+function Card({ card }: PropTypes) {
+  const shouldShowCardActions = () => {
+    return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
+  }
+
   return (
     <MuiCard
       sx={{
@@ -16,11 +46,7 @@ function Card() {
         overflow: 'unset'
       }}
     >
-      <CardMedia
-        sx={{ height: 140 }}
-        image='https://plus.unsplash.com/premium_photo-1772029998902-caf64709122d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNnx8fGVufDB8fHx8fA%3D%3D'
-        title='green iguana'
-      />
+      {card.cover && <CardMedia sx={{ height: 140 }} image={card.cover} title={card.title} />}
       <CardContent
         sx={{
           p: 1.5,
@@ -30,28 +56,33 @@ function Card() {
         }}
       >
         <Typography gutterBottom component='div'>
-          Học Material UI
+          {card.title}
         </Typography>
-        <Typography color='text.secondary'>
-          Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents
-          except Antarctica
-        </Typography>
+        <Typography color='text.secondary'>{card.description}</Typography>
       </CardContent>
-      <CardActions
-        sx={{
-          p: '0 4px 8px 4px'
-        }}
-      >
-        <Button size='small' startIcon={<GroupIcon />}>
-          20
-        </Button>
-        <Button size='small' startIcon={<CommentIcon />}>
-          15
-        </Button>
-        <Button size='small' startIcon={<AttachmentIcon />}>
-          18
-        </Button>
-      </CardActions>
+      {shouldShowCardActions() && (
+        <CardActions
+          sx={{
+            p: '0 4px 8px 4px'
+          }}
+        >
+          {!!card?.memberIds?.length && (
+            <Button size='small' startIcon={<GroupIcon />}>
+              {card?.memberIds?.length}
+            </Button>
+          )}
+          {!!card?.comments?.length && (
+            <Button size='small' startIcon={<CommentIcon />}>
+              {card?.comments?.length}
+            </Button>
+          )}
+          {!!card?.attachments?.length && (
+            <Button size='small' startIcon={<AttachmentIcon />}>
+              {card?.attachments?.length}
+            </Button>
+          )}
+        </CardActions>
+      )}
     </MuiCard>
   )
 }

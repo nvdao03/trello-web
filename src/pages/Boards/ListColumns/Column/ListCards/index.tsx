@@ -1,7 +1,34 @@
 import { Box } from '@mui/material'
 import Card from './Card'
 
-function ListCards() {
+interface PropTypes {
+  cards: (
+    | {
+        _id: string
+        boardId: string
+        columnId: string
+        title: string
+        description: string
+        cover: string
+        memberIds: string[]
+        comments: string[]
+        attachments: string[]
+      }
+    | {
+        _id: string
+        boardId: string
+        columnId: string
+        title: string
+        description: null
+        cover: null
+        memberIds: never[]
+        comments: never[]
+        attachments: never[]
+      }
+  )[]
+}
+
+function ListCards({ cards }: PropTypes) {
   return (
     <Box
       sx={{
@@ -23,9 +50,9 @@ function ListCards() {
         }
       }}
     >
-      <Card />
-      <Card />
-      <Card />
+      {cards.map((card) => (
+        <Card key={card._id} card={card} />
+      ))}
     </Box>
   )
 }
